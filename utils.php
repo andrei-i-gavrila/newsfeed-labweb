@@ -61,6 +61,16 @@ function getConnection()
 
 function dd($expression)
 {
-    var_dump($expression);
+    echo json_encode($expression);
     die();
+}
+
+function json($expression) {
+    header('Content-type: application/json; charset=UTF-8');
+    echo json_encode($expression);
+    return true;
+}
+
+function stripHtml($input) {
+    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
 }

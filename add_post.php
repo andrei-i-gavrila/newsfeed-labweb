@@ -9,10 +9,18 @@ if ($user == null) {
     return redirect_with_error('/index.php', "Not logged in");
 }
 
-$title = $_POST['title'];
-$body = $_POST['body'];
+$title = stripHtml($_POST['title']);
+$body = stripHtml($_POST['body']);
+$category = stripHtml($_POST['category']);
 
-$insertStatement = getConnection()->prepare('insert into news(title, body) values (:title, :body)');
-$insertStatement->execute(compact('title', 'body'));
+$producer = $user->id;
+$published_at = stripHtml($_POST['date']);
+
+$insertStatement = getConnection()->prepare('insert into news(title, body, category, producer, published_at) values (:title, :body, :category, :producer, :published_at)');
+$insertStatement->execute(compact('title', 'body', 'category', 'producer', 'published_at'));
+
+if ($insertStatement->rowCount() == 0) {
+    return redirect_with_error("/add.php", "Error while saving");
+}
 
 return redirect_with_success('/index.php', 'Added');

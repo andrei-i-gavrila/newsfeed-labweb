@@ -2,8 +2,8 @@
 
 require_once 'utils.php';
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = stripHtml($_POST['username']);
+$password = stripHtml($_POST['password']);
 $password_confirmation = $_POST['password_confirmation'];
 
 if ($password !== $password_confirmation) {
