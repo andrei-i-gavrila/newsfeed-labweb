@@ -65,12 +65,22 @@ function dd($expression)
     die();
 }
 
-function json($expression) {
+function json($expression)
+{
     header('Content-type: application/json; charset=UTF-8');
     echo json_encode($expression);
     return true;
 }
 
-function stripHtml($input) {
+function stripHtml($input)
+{
     return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+}
+
+function logDatabase($table, $operation, $id = null)
+{
+    getConnection()
+        ->prepare("insert into logs(table_name, row_id, operation_type) values ('{$table}', :id, '{$operation}')")
+        ->execute(['id' => $id ?? getConnection()->lastInsertId()]);
+
 }

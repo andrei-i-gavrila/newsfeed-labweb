@@ -7,7 +7,7 @@ $password = $_POST['password'];
 
 $database = getConnection();
 
-$passwordStatement = $database->prepare('select password from users where username = :username');
+$passwordStatement = $database->prepare('select id, password from users where username = :username');
 $passwordStatement->execute(compact('username'));
 $passwordField = $passwordStatement->fetchObject();
 
@@ -27,6 +27,8 @@ $storeTokenStatement->execute(compact('username', 'token'));
 if ($storeTokenStatement->rowCount() == 0) {
     return redirect_with_error("/login.php", "Cannot login atm");
 }
+
+logDatabase('users', 'update', $passwordField->id);
 
 setcookie('token', $token, time()+36000);
 return redirect("/index.php");

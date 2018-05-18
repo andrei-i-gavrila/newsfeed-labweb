@@ -22,5 +22,6 @@ $insertStatement->execute(compact('title', 'body', 'category', 'producer', 'publ
 if ($insertStatement->rowCount() == 0) {
     return redirect_with_error("/add.php", "Error while saving");
 }
+logDatabase("news", 'insert');
 
 return redirect_with_success('/index.php', 'Added');

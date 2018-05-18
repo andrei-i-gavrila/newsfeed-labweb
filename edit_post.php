@@ -22,5 +22,6 @@ $updateStatement->execute(compact('title', 'body', 'category', 'producer', 'publ
 if ($updateStatement->rowCount() == 0) {
     return redirect_with_error("/edit.php?id=${$id}", "Error while saving");
 }
+logDatabase("news", 'update', $id);
 
 return redirect_with_success('/index.php', 'Edited');

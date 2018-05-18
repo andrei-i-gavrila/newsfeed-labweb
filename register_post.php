@@ -24,4 +24,6 @@ if (!$insertStatement->execute(compact('username', 'password'))) {
     return redirect_with_error("/register.php", "Cannot insert :-?");
 }
 
+logDatabase("users", 'insert');
+
 return redirect_with_success("/login.php", "Successfully registered. Now you should login");
